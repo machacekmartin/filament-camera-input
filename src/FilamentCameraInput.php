@@ -4,7 +4,6 @@ namespace Machacekmartin\FilamentCameraInput;
 
 use Closure;
 use Filament\Forms\Components\Component;
-use Filament\Support\Colors\Color;
 use Filament\Support\Concerns\HasColor;
 use Illuminate\Contracts\Support\Htmlable;
 
