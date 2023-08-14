@@ -1,15 +1,15 @@
 <?php
 
-namespace VendorName\Skeleton;
+namespace Machacekmartin\FilamentCameraInput;
 
 use Filament\Contracts\Plugin;
 use Filament\Panel;
 
-class SkeletonPlugin implements Plugin
+class FilamentCameraInputPlugin implements Plugin
 {
     public function getId(): string
     {
-        return 'skeleton';
+        return 'filament-camera-input';
     }
 
     public function register(Panel $panel): void
@@ -29,6 +29,9 @@ class SkeletonPlugin implements Plugin
 
     public static function get(): static
     {
-        return filament(app(static::class)->getId());
+        /** @var static $plugin */
+        $plugin = filament(app(static::class)->getId());
+
+        return $plugin;
     }
 }

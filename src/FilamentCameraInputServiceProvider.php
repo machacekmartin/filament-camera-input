@@ -1,6 +1,6 @@
 <?php
 
-namespace VendorName\Skeleton;
+namespace Machacekmartin\FilamentCameraInput;
 
 use Filament\Support\Assets\AlpineComponent;
 use Filament\Support\Assets\Asset;
@@ -8,20 +8,20 @@ use Filament\Support\Assets\Css;
 use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
 use Filament\Support\Facades\FilamentIcon;
-use Filament\Support\Icons\Icon;
+use Filament\Support\Icons\IconManager;
 use Illuminate\Filesystem\Filesystem;
 use Livewire\Features\SupportTesting\Testable;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use VendorName\Skeleton\Commands\SkeletonCommand;
-use VendorName\Skeleton\Testing\TestsSkeleton;
+use Machacekmartin\FilamentCameraInput\Commands\FilamentCameraInputCommand;
+use Machacekmartin\FilamentCameraInput\Testing\TestsFilamentCameraInput;
 
-class SkeletonServiceProvider extends PackageServiceProvider
+class FilamentCameraInputServiceProvider extends PackageServiceProvider
 {
-    public static string $name = 'skeleton';
+    public static string $name = 'filament-camera-input';
 
-    public static string $viewNamespace = 'skeleton';
+    public static string $viewNamespace = 'filament-camera-input';
 
     public function configurePackage(Package $package): void
     {
@@ -37,7 +37,7 @@ class SkeletonServiceProvider extends PackageServiceProvider
                     ->publishConfigFile()
                     ->publishMigrations()
                     ->askToRunMigrations()
-                    ->askToStarRepoOnGitHub(':vendor_slug/:package_slug');
+                    ->askToStarRepoOnGitHub('machacekmartin/filament-camera-input');
             });
 
         $configFileName = $package->shortName();
@@ -83,18 +83,18 @@ class SkeletonServiceProvider extends PackageServiceProvider
         if (app()->runningInConsole()) {
             foreach (app(Filesystem::class)->files(__DIR__ . '/../stubs/') as $file) {
                 $this->publishes([
-                    $file->getRealPath() => base_path("stubs/skeleton/{$file->getFilename()}"),
-                ], 'skeleton-stubs');
+                    $file->getRealPath() => base_path("stubs/filament-camera-input/{$file->getFilename()}"),
+                ], 'filament-camera-input-stubs');
             }
         }
 
         // Testing
-        Testable::mixin(new TestsSkeleton());
+        Testable::mixin(new TestsFilamentCameraInput());
     }
 
     protected function getAssetPackageName(): ?string
     {
-        return ':vendor_slug/:package_slug';
+        return 'machacekmartin/filament-camera-input';
     }
 
     /**
@@ -103,9 +103,9 @@ class SkeletonServiceProvider extends PackageServiceProvider
     protected function getAssets(): array
     {
         return [
-            // AlpineComponent::make('skeleton', __DIR__ . '/../resources/dist/components/skeleton.js'),
-            Css::make('skeleton-styles', __DIR__ . '/../resources/dist/skeleton.css'),
-            Js::make('skeleton-scripts', __DIR__ . '/../resources/dist/skeleton.js'),
+            // AlpineComponent::make('filament-camera-input', __DIR__ . '/../resources/dist/components/filament-camera-input.js'),
+            Css::make('filament-camera-input-styles', __DIR__ . '/../resources/dist/filament-camera-input.css'),
+            Js::make('filament-camera-input-scripts', __DIR__ . '/../resources/dist/filament-camera-input.js'),
         ];
     }
 
@@ -115,12 +115,12 @@ class SkeletonServiceProvider extends PackageServiceProvider
     protected function getCommands(): array
     {
         return [
-            SkeletonCommand::class,
+            FilamentCameraInputCommand::class,
         ];
     }
 
     /**
-     * @return array<string, Icon>
+     * @return array<string, FilamentIcon>
      */
     protected function getIcons(): array
     {
@@ -149,7 +149,7 @@ class SkeletonServiceProvider extends PackageServiceProvider
     protected function getMigrations(): array
     {
         return [
-            'create_skeleton_table',
+            'create_filament-camera-input_table',
         ];
     }
 }
