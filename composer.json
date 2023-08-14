@@ -39,8 +39,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Machacekmartin\\FilamentCameraInput\\": "src/",
-            "Machacekmartin\\FilamentCameraInput\\Database\\Factories\\": "database/factories/"
+            "Machacekmartin\\FilamentCameraInput\\": "src/"
         }
     },
     "autoload-dev": {
@@ -66,10 +65,7 @@
         "laravel": {
             "providers": [
                 "Machacekmartin\\FilamentCameraInput\\FilamentCameraInputServiceProvider"
-            ],
-            "aliases": {
-                "FilamentCameraInput": "Machacekmartin\\FilamentCameraInput\\Facades\\FilamentCameraInput"
-            }
+            ]
         }
     },
     "minimum-stability": "dev",

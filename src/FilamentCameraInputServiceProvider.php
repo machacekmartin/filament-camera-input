@@ -78,15 +78,6 @@ class FilamentCameraInputServiceProvider extends PackageServiceProvider
         // Icon Registration
         FilamentIcon::register($this->getIcons());
 
-        // Handle Stubs
-        if (app()->runningInConsole()) {
-            foreach (app(Filesystem::class)->files(__DIR__ . '/../stubs/') as $file) {
-                $this->publishes([
-                    $file->getRealPath() => base_path("stubs/filament-camera-input/{$file->getFilename()}"),
-                ], 'filament-camera-input-stubs');
-            }
-        }
-
         // Testing
         Testable::mixin(new TestsFilamentCameraInput());
     }
@@ -113,9 +104,7 @@ class FilamentCameraInputServiceProvider extends PackageServiceProvider
      */
     protected function getCommands(): array
     {
-        return [
-            FilamentCameraInputCommand::class,
-        ];
+        return [];
     }
 
     /**
