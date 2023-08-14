@@ -8,14 +8,13 @@ use Filament\Support\Assets\Css;
 use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
 use Filament\Support\Facades\FilamentIcon;
-use Filament\Support\Icons\IconManager;
 use Illuminate\Filesystem\Filesystem;
 use Livewire\Features\SupportTesting\Testable;
+use Machacekmartin\FilamentCameraInput\Commands\FilamentCameraInputCommand;
+use Machacekmartin\FilamentCameraInput\Testing\TestsFilamentCameraInput;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Machacekmartin\FilamentCameraInput\Commands\FilamentCameraInputCommand;
-use Machacekmartin\FilamentCameraInput\Testing\TestsFilamentCameraInput;
 
 class FilamentCameraInputServiceProvider extends PackageServiceProvider
 {
