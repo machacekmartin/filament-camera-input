@@ -40,11 +40,6 @@ class FilamentCameraInput extends Component
         return $this;
     }
 
-    public function getColor(): array
-    {
-        return $this->evaluate($this->color) ?? Color::Blue;
-    }
-
     public function getContent(): string
     {
         return $this->evaluate($this->content);

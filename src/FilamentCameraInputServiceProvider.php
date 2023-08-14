@@ -85,8 +85,8 @@ class FilamentCameraInputServiceProvider extends PackageServiceProvider
     {
         return [
             // AlpineComponent::make('filament-camera-input', __DIR__ . '/../resources/dist/components/filament-camera-input.js'),
-            Css::make('filament-camera-input-styles', __DIR__ . '/../resources/dist/filament-camera-input.css'),
-            Js::make('filament-camera-input-scripts', __DIR__ . '/../resources/dist/filament-camera-input.js'),
+            // Css::make('filament-camera-input-styles', __DIR__ . '/../resources/dist/filament-camera-input.css'),
+            // Js::make('filament-camera-input-scripts', __DIR__ . '/../resources/dist/filament-camera-input.js'),
         ];
     }
 
