@@ -22,18 +22,11 @@ class FilamentCameraInputServiceProvider extends PackageServiceProvider
 
     public function configurePackage(Package $package): void
     {
-        /*
-         * This class is a Package Service Provider
-         *
-         * More info: https://github.com/spatie/laravel-package-tools
-         */
         $package->name(static::$name)
             ->hasCommands($this->getCommands())
             ->hasInstallCommand(function (InstallCommand $command) {
                 $command
                     ->publishConfigFile()
-                    ->publishMigrations()
-                    ->askToRunMigrations()
                     ->askToStarRepoOnGitHub('machacekmartin/filament-camera-input');
             });
 
@@ -80,7 +73,7 @@ class FilamentCameraInputServiceProvider extends PackageServiceProvider
         Testable::mixin(new TestsFilamentCameraInput());
     }
 
-    protected function getAssetPackageName(): ?string
+    protected function getAssetPackageName(): string
     {
         return 'machacekmartin/filament-camera-input';
     }
@@ -106,7 +99,7 @@ class FilamentCameraInputServiceProvider extends PackageServiceProvider
     }
 
     /**
-     * @return array<string, FilamentIcon>
+     * @return array<string, string>
      */
     protected function getIcons(): array
     {
