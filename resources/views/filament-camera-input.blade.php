@@ -39,23 +39,25 @@
         $refs.wrapper.removeEventListener('mousemove', this.moveRectangle);
     },
     capture() {
-        const canvas = document.createElement('canvas');
-        canvas.width = $refs.video.videoWidth;
-        canvas.height = $refs.video.videoHeight;
-        const ctx = canvas.getContext('2d');
+        $refs.canvas.width = $refs.rectangle.offsetWidth;
+        $refs.canvas.height = $refs.rectangle.offsetHeight;
 
-        if (this.mirrored) {
-            ctx.scale(-1, 1);
-            ctx.drawImage( $refs.video, 0, 0, -canvas.width, canvas.height);
-        } else {
-            ctx.drawImage( $refs.video, 0, 0, canvas.width, canvas.height);
-        }
+        const scaleX = $refs.video.videoWidth / $refs.video.offsetWidth;
+        const scaleY = $refs.video.videoHeight / $refs.video.offsetHeight;
 
-        canvas.toBlob((blob) => {
+        $refs.canvas.getContext('2d').drawImage($refs.video,
+            ($refs.rectangle.offsetLeft - $refs.video.offsetLeft) * scaleX,
+            ($refs.rectangle.offsetTop - $refs.video.offsetTop) * scaleY,
+            $refs.rectangle.offsetWidth * scaleX, $refs.rectangle.offsetHeight * scaleY,
+            0, 0,
+            $refs.canvas.width, $refs.canvas.height
+        );
+
+        $refs.canvas.toBlob((blob) => {
             const file = new File([blob], 'captured_frame.png', { type: 'image/png' })
             this.image = URL.createObjectURL(file)
         }, 'image/png');
-    }
+    },
 }">
     <p
         {{
@@ -91,7 +93,7 @@
         role="button"
         x-on:click="capture"
     >
-        Capture Frame
+        Capture Cropped Frame
     </div>
     <div
         role="button"
@@ -100,26 +102,25 @@
         Clear Frame
     </div>
 
-    <div x-bind:class="{ 'bg-white': loading }" style="position: relative; max-width: 600px; height: 400px; border-radius: .45rem; overflow: hidden; border: solid 1px rgba(255,255,255,.2)">
+    <div x-bind:class="{ 'bg-white': loading }" style="position: relative; max-width: 600px; border-radius: .45rem; overflow: hidden; border: solid 1px rgba(255,255,255,.2)">
         <video
             x-ref="video"
             x-bind:style="{ transform: mirrored ? 'scaleX(-1)' : 'none' }"
             style="width: 100%; height: 100%; background: rgba(255, 255, 255, 0.05)"
             autoplay
         ></video>
-        <div x-ref="wrapper" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: hidden;">
-            <template x-if="image !== null">
-                <div
-                    x-ref="rectangle"
-                    x-on:mousedown.self="activate"
-                    x-on:mouseup.self="release"
-                    style="width: 100px; height: 100px; border-radius: .8rem; position: absolute; top: 0; left: 0; border: white 2px dashed; cursor: move; pointer-events: all; position: absolute;">
-                </div>
-            </template>
+        <div x-ref="wrapper" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: hidden; display: flex; align-items: center; justify-content: center">
+            <div
+                x-ref="rectangle"
+                x-on:mousedown.self="activate"
+                x-on:mouseup.self="release"
+                style="height: 80%; box-shadow: rgba(0,0,0,.9) 0px 0px 10px 100vw; border-radius: 0; aspect-ratio: 1/1; border: rgba(255,255,255,.2) 2px dashed; position: absolute; cursor: move; pointer-events: all;">
+            </div>
 
             <template x-if="image !== null">
-                <img :src="image" style="pointer-events: none; user-select: none; height: 100%; width: 100%; object-fit: contain">
+                <img :src="image" style="pointer-events: none; user-select: none; height: 100%; width: 100%; object-fit: contain; z-index: 50" x-ref="image">
             </template>
         </div>
     </div>
+    <canvas x-ref="canvas" style="display: none"></canvas>
 </div>
