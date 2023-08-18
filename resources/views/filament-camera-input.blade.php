@@ -1,7 +1,3 @@
-@php
-    $color = $getColor();
-@endphp
-
 <div x-data="{
     stream: null,
     image: null,
@@ -22,15 +18,10 @@
         this.stream = null;
     },
     moveRectangle(event) {
-        let rect = $refs.wrapper.getBoundingClientRect();
+        const rect = $refs.wrapper.getBoundingClientRect();
 
-        let coords = {
-            x: event.clientX - rect.left,
-            y: event.clientY - rect.top
-        };
-
-        $refs.rectangle.style.left = coords.x - ($refs.rectangle.offsetWidth / 2) + 'px';
-        $refs.rectangle.style.top = coords.y +- ($refs.rectangle.offsetHeight / 2) + 'px';
+        $refs.rectangle.style.left = event.clientX - rect.left - ($refs.rectangle.offsetWidth / 2) + 'px';
+        $refs.rectangle.style.top = event.clientY - rect.top +- ($refs.rectangle.offsetHeight / 2) + 'px';
     },
     activate() {
         $refs.wrapper.addEventListener('mousemove', this.moveRectangle);
@@ -59,15 +50,7 @@
         }, 'image/png');
     },
 }">
-    <p
-        {{
-            $attributes->class([
-                match ($color) {
-                    default => 'text-primary-600 dark:text-primary-400',
-                },
-            ])
-        }}
-    >
+    <p>
         {{ $getLabel() }}
     </p>
 
@@ -102,7 +85,7 @@
         Clear Frame
     </div>
 
-    <div x-bind:class="{ 'bg-white': loading }" style="position: relative; max-width: 600px; border-radius: .45rem; overflow: hidden; border: solid 1px rgba(255,255,255,.2)">
+    <div x-bind:class="{ 'bg-white': loading }" style="position: relative; max-width: 100%; border-radius: .45rem; overflow: hidden; border: solid 1px rgba(255,255,255,.2)">
         <video
             x-ref="video"
             x-bind:style="{ transform: mirrored ? 'scaleX(-1)' : 'none' }"
