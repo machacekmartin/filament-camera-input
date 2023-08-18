@@ -4,13 +4,10 @@ namespace Machacekmartin\FilamentCameraInput;
 
 use Closure;
 use Filament\Forms\Components\Component;
-use Filament\Support\Concerns\HasColor;
 use Illuminate\Contracts\Support\Htmlable;
 
 class FilamentCameraInput extends Component
 {
-    use HasColor;
-
     protected string | Closure $content = '';
 
     protected string $view = 'filament-camera-input::filament-camera-input';
