@@ -3,41 +3,42 @@
 namespace Machacekmartin\FilamentCameraInput;
 
 use Closure;
-use Filament\Forms\Components\Component;
-use Illuminate\Contracts\Support\Htmlable;
+use Filament\Forms\Components\BaseFileUpload;
+use Filament\Forms\Components\Field;
+use Illuminate\Support\Facades\Storage;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
+use Livewire\WithFileUploads;
 
-class FilamentCameraInput extends Component
+class FilamentCameraInput extends Field
 {
-    protected string | Closure $content = '';
+    use WithFileUploads;
 
     protected string $view = 'filament-camera-input::filament-camera-input';
 
-    final public function __construct(string | Htmlable | Closure $label)
-    {
-        $this->label($label);
-    }
+    protected string | Closure | null $directory = null;
 
-    public static function make(string | Htmlable | Closure $label): static
-    {
-        return app(static::class, ['label' => $label]);
-    }
-
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 
-        $this->dehydrated(false);
+        $this->beforeStateDehydrated(function (TemporaryUploadedFile $state): void {
+            $state->storeAs('public/'. $this->getDirectory() .'/camera-inputs', $state->getFilename());
+        });
+
+        $this->dehydrateStateUsing(function (TemporaryUploadedFile $state): string {
+            return 'camera-inputs/' . $this->getDirectory() . '/' . $state->getFilename();
+        });
     }
 
-    public function content(string | Closure $content): static
+    public function directory(string | Closure | null $directory): static
     {
-        $this->content = $content;
+        $this->directory = $directory;
 
         return $this;
     }
 
-    public function getContent(): string
+    public function getDirectory(): ?string
     {
-        return $this->evaluate($this->content);
+        return $this->evaluate($this->directory);
     }
 }
