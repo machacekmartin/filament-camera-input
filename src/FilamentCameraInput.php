@@ -3,9 +3,7 @@
 namespace Machacekmartin\FilamentCameraInput;
 
 use Closure;
-use Filament\Forms\Components\BaseFileUpload;
 use Filament\Forms\Components\Field;
-use Illuminate\Support\Facades\Storage;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Livewire\WithFileUploads;
 
@@ -22,7 +20,7 @@ class FilamentCameraInput extends Field
         parent::setUp();
 
         $this->beforeStateDehydrated(function (TemporaryUploadedFile $state): void {
-            $state->storeAs('public/'. $this->getDirectory() .'/camera-inputs', $state->getFilename());
+            $state->storeAs('public/' . $this->getDirectory() . '/camera-inputs', $state->getFilename());
         });
 
         $this->dehydrateStateUsing(function (TemporaryUploadedFile $state): string {
